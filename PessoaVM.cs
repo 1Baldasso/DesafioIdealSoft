@@ -1,0 +1,11 @@
+﻿using System;
+
+namespace DesafioIdealSoft;
+
+public class PessoaVM
+{
+    public Guid Id { get; set; }
+    public string Nome { get; set; }
+    public string Sobrenome { get; set; }
+    public string Telefone { get; set; }
+}
