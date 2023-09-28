@@ -15,7 +15,7 @@ namespace DesafioIdealSoft
             : this()
         {
             _pessoaRepository = repository;
-            PessoasList = new ObservableCollection<PessoaVM>(repository.ObterTodosAsync().Result
+            PessoasList = new ObservableCollection<PessoaVM>(repository.ObterTodos()
                 .Select(x=> x.ToPessoaVM()));
         }
         public PaginaPrincipal()
@@ -29,17 +29,17 @@ namespace DesafioIdealSoft
             var editarPessoa = new PaginaPessoaCommand(pessoa.Id, _pessoaRepository);
             editarPessoa.Closed += async (sender, args) =>
             {
-                var pessoas = await _pessoaRepository.ObterTodosAsync();
+                var pessoas = _pessoaRepository.ObterTodos();
                 PessoasList = new ObservableCollection<PessoaVM>(pessoas.Select(x => x.ToPessoaVM()));
                 DataGrid1.ItemsSource = PessoasList;
             };
             editarPessoa.ShowDialog();
         }
-        public async void Remover_Click(object sender ,RoutedEventArgs args)
+        public void Remover_Click(object sender ,RoutedEventArgs args)
         {
             var pessoa = (sender as Button).DataContext as PessoaVM;
-            await _pessoaRepository.RemoverAsync(pessoa.ToPessoa());
-            var pessoas = await _pessoaRepository.ObterTodosAsync();
+            _pessoaRepository.Remover(pessoa.ToPessoa());
+            var pessoas = _pessoaRepository.ObterTodos();
             PessoasList = new ObservableCollection<PessoaVM>(pessoas.Select(x => x.ToPessoaVM()));
             DataGrid1.ItemsSource = PessoasList;
         }
@@ -49,7 +49,7 @@ namespace DesafioIdealSoft
             var editarPessoa = new PaginaPessoaCommand(_pessoaRepository);
             editarPessoa.Closed += async (sender, args) =>
             {
-                var pessoas = await _pessoaRepository.ObterTodosAsync();
+                var pessoas = _pessoaRepository.ObterTodos();
                 PessoasList = new ObservableCollection<PessoaVM>(pessoas.Select(x => x.ToPessoaVM()));
                 DataGrid1.ItemsSource = PessoasList;
             };

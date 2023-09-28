@@ -26,7 +26,7 @@ namespace DesafioIdealSoft
             : this()
         {
             _repository = repository;
-            _pessoa = repository.ObterPorIdAsync(id).Result.ToPessoaVM();
+            _pessoa = repository.ObterPorId(id).ToPessoaVM();
             DataContext = _pessoa;
             btnConfirmar.Content = "Editar";
         }
@@ -35,15 +35,15 @@ namespace DesafioIdealSoft
             InitializeComponent();
         }
 
-        public async void btnConfirmar_Click(object sender, RoutedEventArgs args)
+        public void btnConfirmar_Click(object sender, RoutedEventArgs args)
         {
             _pessoa.Nome = txtNome.Text;   
             _pessoa.Sobrenome = txtSobrenome.Text;
             _pessoa.Telefone = txtTelefone.Text;
             if(btnConfirmar.Content.ToString() == "Editar")
-                await _repository.EditarAsync(_pessoa.ToPessoa());
+                _repository.Editar(_pessoa.ToPessoa());
             else
-                await _repository.AdicionarAsync(_pessoa.ToPessoa());
+                _repository.Adicionar(_pessoa.ToPessoa());
             Close();
         }
     }

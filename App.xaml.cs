@@ -1,12 +1,8 @@
 ﻿using DesafioIdealSoft.DataAccess;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
+using Microsoft.Extensions.Http;
+using System;
 
 namespace DesafioIdealSoft
 {
@@ -25,7 +21,8 @@ namespace DesafioIdealSoft
 
         private void ConfigureServices(ServiceCollection services)
         {
-            services.AddScoped<IPessoaRepository, PessoaRepository>();
+            //services.AddScoped<IPessoaRepository, MockPessoaRepository>();
+            services.AddScoped<IPessoaRepository, ApiPessoaRepository>();
             services.AddSingleton<PaginaPrincipal>();
         }
 

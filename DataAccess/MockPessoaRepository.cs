@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 
 namespace DesafioIdealSoft.DataAccess;
 
-public class PessoaRepository : IPessoaRepository
+public class MockPessoaRepository : IPessoaRepository
 {
     private List<Pessoa> pessoas;
-    public PessoaRepository()
+    public MockPessoaRepository()
     {
         pessoas = new Pessoa[]
         {
@@ -24,29 +24,29 @@ public class PessoaRepository : IPessoaRepository
             }
         }.ToList();
     }
-    public async Task AdicionarAsync(Pessoa pessoa)
+    public void Adicionar(Pessoa pessoa)
     {
         pessoas.Add(pessoa);
     }
 
-    public async Task EditarAsync(Pessoa pessoa)
+    public void Editar(Pessoa pessoa)
     {
         var index = pessoas.FindIndex(x=>x.Id == pessoa.Id);
         pessoas[index] = pessoa;
     }
 
-    public async Task<Pessoa> ObterPorIdAsync(Guid id)
+    public Pessoa ObterPorId(Guid id)
     {
-        var todos = await this.ObterTodosAsync();
+        var todos = this.ObterTodos();
         return todos.FirstOrDefault(x => x.Id == id);
     }
 
-    public async Task<IEnumerable<Pessoa>> ObterTodosAsync()
+    public IEnumerable<Pessoa> ObterTodos()
     {
         return pessoas;
     }
 
-    public async Task RemoverAsync(Pessoa pessoa)
+    public void Remover(Pessoa pessoa)
     {
         var pess = pessoas.FirstOrDefault(x => x.Id == pessoa.Id);
         pessoas.Remove(pess);
